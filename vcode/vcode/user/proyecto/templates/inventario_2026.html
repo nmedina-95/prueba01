@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario 2026</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+</head>
+<body>
+
+<div class="contenedor">
+    <div class="header-flex">
+        <h1>INVENTARIO 2026</h1>
+        <a href="{{ url_for('menu_principal') }}" class="btn cancelar">⬅ Volver al Menú</a>
+    </div>
+
+    <!-- Formulario para Inventario 2026 -->
+    <div class="tarjeta">
+        <h2>Registrar Nuevo Ítem - Inventario 2026</h2>
+        <form action="#" method="POST">
+            <div class="formulario inventario-grid">
+                <div>
+                    <label for="sede">SEDE</label>
+                    <input type="text" id="sede" name="sede" required>
+                </div>
+                <div>
+                    <label for="usuario">USUARIO</label>
+                    <input type="text" id="usuario" name="usuario" required>
+                </div>
+                <div>
+                    <label for="empresa">EMPRESA</label>
+                    <input type="text" id="empresa" name="empresa" required>
+                </div>
+                <div>
+                    <label for="gerencia">GERENCIA</label>
+                    <input type="text" id="gerencia" name="gerencia" required>
+                </div>
+                <div>
+                    <label for="area">ÁREA</label>
+                    <input type="text" id="area" name="area" required>
+                </div>
+                <div>
+                    <label for="equipo">EQUIPO</label>
+                    <input type="text" id="equipo" name="equipo" required>
+                </div>
+                <div>
+                    <label for="marca">MARCA</label>
+                    <input type="text" id="marca" name="marca" required>
+                </div>
+                <div>
+                    <label for="serie">SERIE</label>
+                    <input type="text" id="serie" name="serie" required>
+                </div>
+                <div>
+                    <label for="estado_equipo">Estado Equipo</label>
+                    <input type="text" id="estado_equipo" name="estado_equipo" required>
+                </div>
+                <div>
+                    <label for="verificado">Verificado</label>
+                    <select id="verificado" name="verificado">
+                        <option value="Sí">Sí</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="activo_fijo">ACTIVO FIJO</label>
+                    <input type="text" id="activo_fijo" name="activo_fijo">
+                </div>
+            </div>
+
+            <div style="margin-top: 15px;">
+                <label for="observaciones">Observaciones</label>
+                <input type="text" id="observaciones" name="observaciones">
+            </div>
+
+            <div style="margin-top: 15px;">
+                <label for="comentarios">COMENTARIOS</label>
+                <input type="text" id="comentarios" name="comentarios">
+            </div>
+
+            <button class="btn guardar" type="submit" style="margin-top: 20px;">GUARDAR REGISTRO</button>
+        </form>
+    </div>
+
+    <!-- Tabla de Inventario 2026 -->
+    <div class="tabla-contenedor">
+        <table>
+            <thead>
+                <tr>
+                    <th>SEDE</th>
+                    <th>USUARIO</th>
+                    <th>EMPRESA</th>
+                    <th>GERENCIA</th>
+                    <th>ÁREA</th>
+                    <th>EQUIPO</th>
+                    <th>MARCA</th>
+                    <th>SERIE</th>
+                    <th>Estado</th>
+                    <th>Observaciones</th>
+                    <th>Verif.</th>
+                    <th>Activo Fijo</th>
+                    <th>Comentarios</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="13" class="sin-datos">No existen registros en el inventario 2026.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

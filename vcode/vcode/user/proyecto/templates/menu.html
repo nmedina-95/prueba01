@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Principal - Sistema</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+</head>
+<body>
+    <div class="menu-contenedor">
+        <h1>MENÚ PRINCIPAL</h1>
+        <p class="menu-subtitulo">Seleccione el módulo al que desea ingresar:</p>
+        
+        <div class="menu-botones-grid">
+            <a href="{{ url_for('inicio') }}" class="tarjeta-menu personal">
+                <h2>👤 Personal</h2>
+                <p>Gestión y control de equipos asignados al personal.</p>
+            </a>
+
+            <a href="{{ url_for('inventario_2026') }}" class="tarjeta-menu inventario">
+                <h2>📦 Inventario 2026</h2>
+                <p>Registro detallado de sedes, activos fijos y categorías 2026.</p>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

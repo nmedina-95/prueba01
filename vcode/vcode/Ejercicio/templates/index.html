@@ -1,0 +1,601 @@
+por que  me sale este error?
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Control de Equipos</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='estilos.css') }}">
+
+</head>
+
+<body>
+
+<div class="contenedor">
+
+    <h1>CONTROL DE EQUIPOS</h1>
+
+
+    <!-- =====================================================
+         FORMULARIO PARA REGISTRAR
+         ===================================================== -->
+
+    <div class="tarjeta">
+
+        <h2>Registrar equipo</h2>
+
+        <form action="{{ url_for('guardar') }}"
+              method="POST">
+
+            <div class="formulario">
+
+                <!-- NOMBRE -->
+
+                <div>
+                    <label for="nombre">Nombre</label>
+
+                    <input
+                        type="text"
+                        id="nombre"
+                        name="nombre"
+                        required>
+                </div>
+
+
+                <!-- EQUIPO -->
+
+                <div>
+                    <label for="equipo">Equipo</label>
+
+                    <input
+                        type="text"
+                        id="equipo"
+                        name="equipo"
+                        required>
+                </div>
+
+
+                <!-- USUARIO -->
+
+                <div>
+                    <label for="usuario">Usuario</label>
+
+                    <input
+                        type="text"
+                        id="usuario"
+                        name="usuario"
+                        required>
+                </div>
+
+
+                <!-- NUMERO DE SERIE -->
+
+                <div>
+                    <label for="numero_serie">
+                        Número de serie
+                    </label>
+
+                    <input
+                        type="text"
+                        id="numero_serie"
+                        name="numero_serie"
+                        required>
+                </div>
+
+
+                <!-- FICHA -->
+
+                <div>
+                    <label for="ficha_entrega">
+                        Ficha de entrega
+                    </label>
+
+                    <input
+                        type="text"
+                        id="ficha_entrega"
+                        name="ficha_entrega"
+                        required>
+                </div>
+
+
+                <!-- CONSIGNACION -->
+
+                <div>
+                    <label for="consignacion">
+                        Consignación
+                    </label>
+
+                    <select
+                        id="consignacion"
+                        name="consignacion">
+
+                        <option value="Sí">Sí</option>
+
+                        <option value="No">No</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="btn guardar"
+                type="submit">
+
+                GUARDAR
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- =====================================================
+         BUSCADOR
+         ===================================================== -->
+
+    <div class="busqueda">
+
+        <form
+            method="GET"
+            action="{{ url_for('inicio') }}">
+
+            <input
+                type="text"
+                name="buscar"
+                value="{{ buscar }}"
+                placeholder="Buscar por nombre, equipo, usuario o serie">
+
+
+            <button
+                type="submit"
+                class="btn buscar">
+
+                BUSCAR
+
+            </button>
+
+
+            <a
+                href="{{ url_for('inicio') }}"
+                class="btn limpiar">
+
+                LIMPIAR
+
+            </a>
+
+        </form>
+
+    </div>
+
+
+    <!-- =====================================================
+         TABLA
+         ===================================================== -->
+
+    <div class="tabla-contenedor">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Nombre</th>
+
+                    <th>Equipo</th>
+
+                    <th>Usuario</th>
+
+                    <th>N° Serie</th>
+
+                    <th>Ficha Entrega</th>
+
+                    <th>Consignación</th>
+
+                    <th>Acciones</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            {% for equipo in equipos %}
+
+                <tr>
+
+                    <!-- ID -->
+
+                    <td>
+                        {{ equipo["id"] }}
+                    </td>
+
+
+                    <!-- NOMBRE -->
+
+                    <td>
+                        {{ equipo["nombre"] }}
+                    </td>
+
+
+                    <!-- EQUIPO -->
+
+                    <td>
+                        {{ equipo["equipo"] }}
+                    </td>
+
+
+                    <!-- USUARIO -->
+
+                    <td>
+                        {{ equipo["usuario"] }}
+                    </td>
+
+
+                    <!-- NUMERO DE SERIE -->
+
+                    <td>
+                        {{ equipo["numero_serie"] }}
+                    </td>
+
+
+                    <!-- FICHA -->
+
+                    <td>
+                        {{ equipo["ficha_entrega"] }}
+                    </td>
+
+
+                    <!-- CONSIGNACION -->
+
+                    <td>
+                        {{ equipo["consignacion"] }}
+                    </td>
+
+
+                    <!-- ACCIONES -->
+
+                    <td>
+
+                        <!-- EDITAR -->
+
+                        <button
+                            type="button"
+                            class="btn editar"
+
+                         onclick='editarEquipo(
+    {{ equipo["id"] }},
+    {{ equipo["nombre"] | tojson }},
+    {{ equipo["equipo"] | tojson }},
+    {{ equipo["usuario"] | tojson }},
+    {{ equipo["numero_serie"] | tojson }},
+    {{ equipo["ficha_entrega"] | tojson }},
+    {{ equipo["consignacion"] | tojson }}
+)'>
+
+                            EDITAR
+
+                        </button>
+
+
+                        <!-- ELIMINAR -->
+
+                        <form
+                            action="{{ url_for('eliminar', id_equipo=equipo['id']) }}"
+                            method="POST"
+                            style="display:inline;"
+
+                            onsubmit="return confirmarEliminar();">
+
+                            <button
+                                type="submit"
+                                class="btn eliminar">
+
+                                ELIMINAR
+
+                            </button>
+
+                        </form>
+
+                    </td>
+
+                </tr>
+
+
+            {% else %}
+
+                <!-- SIN REGISTROS -->
+
+                <tr>
+
+                    <td
+                        colspan="8"
+                        class="sin-datos">
+
+                        No existen registros.
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     VENTANA MODAL PARA EDITAR
+     ========================================================= -->
+
+<div
+    id="modal"
+    class="modal">
+
+    <div class="modal-contenido">
+
+        <h2>Editar equipo</h2>
+
+
+        <form
+            id="formEditar"
+            method="POST">
+
+
+            <!-- NOMBRE -->
+
+            <label for="edit_nombre">
+                Nombre
+            </label>
+
+            <input
+                type="text"
+                id="edit_nombre"
+                name="nombre"
+                required>
+
+
+            <!-- EQUIPO -->
+
+            <label for="edit_equipo">
+                Equipo
+            </label>
+
+            <input
+                type="text"
+                id="edit_equipo"
+                name="equipo"
+                required>
+
+
+            <!-- USUARIO -->
+
+            <label for="edit_usuario">
+                Usuario
+            </label>
+
+            <input
+                type="text"
+                id="edit_usuario"
+                name="usuario"
+                required>
+
+
+            <!-- SERIE -->
+
+            <label for="edit_serie">
+                Número de serie
+            </label>
+
+            <input
+                type="text"
+                id="edit_serie"
+                name="numero_serie"
+                required>
+
+
+            <!-- FICHA -->
+
+            <label for="edit_ficha">
+                Ficha de entrega
+            </label>
+
+            <input
+                type="text"
+                id="edit_ficha"
+                name="ficha_entrega"
+                required>
+
+
+            <!-- CONSIGNACION -->
+
+            <label for="edit_consignacion">
+                Consignación
+            </label>
+
+            <select
+                id="edit_consignacion"
+                name="consignacion">
+
+                <option value="Sí">
+                    Sí
+                </option>
+
+                <option value="No">
+                    No
+                </option>
+
+            </select>
+
+
+            <!-- BOTONES -->
+
+            <div class="modal-botones">
+
+                <button
+                    class="btn guardar"
+                    type="submit">
+
+                    GUARDAR CAMBIOS
+
+                </button>
+
+
+                <button
+                    class="btn cancelar"
+                    type="button"
+                    onclick="cerrarModal()">
+
+                    CANCELAR
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+     ========================================================= -->
+
+<script>
+
+
+/*
+==============================================================
+EDITAR EQUIPO
+==============================================================
+*/
+
+function editarEquipo(
+    id,
+    nombre,
+    equipo,
+    usuario,
+    serie,
+    ficha,
+    consignacion
+) {
+
+    // Mostrar ventana
+
+    document.getElementById("modal").style.display = "flex";
+
+
+    // Cambiar URL del formulario
+
+    document.getElementById("formEditar").action =
+        "/editar/" + id;
+
+
+    // Cargar datos
+
+    document.getElementById("edit_nombre").value =
+        nombre;
+
+
+    document.getElementById("edit_equipo").value =
+        equipo;
+
+
+    document.getElementById("edit_usuario").value =
+        usuario;
+
+
+    document.getElementById("edit_serie").value =
+        serie;
+
+
+    document.getElementById("edit_ficha").value =
+        ficha;
+
+
+    document.getElementById("edit_consignacion").value =
+        consignacion;
+
+}
+
+
+
+/*
+==============================================================
+CERRAR MODAL
+==============================================================
+*/
+
+function cerrarModal() {
+
+    document.getElementById("modal").style.display =
+        "none";
+
+}
+
+
+
+/*
+==============================================================
+CONFIRMAR ELIMINACIÓN
+==============================================================
+*/
+
+function confirmarEliminar() {
+
+    return confirm(
+        "¿Está seguro de eliminar este registro?"
+    );
+
+}
+
+
+
+/*
+==============================================================
+CERRAR MODAL AL HACER CLIC FUERA
+==============================================================
+*/
+
+window.onclick = function(event) {
+
+    const modal =
+        document.getElementById("modal");
+
+    if (event.target === modal) {
+
+        cerrarModal();
+
+    }
+
+};
+
+
+</script>
+
+
+</body>
+
+</html>
